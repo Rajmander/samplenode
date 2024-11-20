@@ -77,54 +77,49 @@ app.patch("/user", async (request, response) => {
   response.status(200).json({ data: updatedData });
 });
 
-app.get("/users", async (request, response) => {
-  try {
-    const data = await User.find(
-      // { limit: 2, sort: { username: 1 } }
-      {},
-      { password: 0, _id: 0, username: 1 }
-    )
-      .sort({ username: 1 })
-      //.select("password -mobile")
-      .limit(2);
-    response.json(data);
-    return;
-    console.log(data);
-    return;
+// app.get("/users", async (request, response) => {
+//   try {
+//     const data = await User.find({}, {}, { sort: { username: 1 } }); //.select("username -_id");
 
-    const count = await User.countDocuments();
-    console.log(count);
-    if (count) {
-      const page = request.query.page > 0 ? request.query.page : 1;
-      const limit = parseInt(request.query.limit) || 3;
+//     response.json(data);
+//     return;
 
-      console.log(">>>>>", typeof limit);
+//     const count = await User.countDocuments();
+//     console.log(count);
+//     if (count) {
+//       const page = request.query.page > 0 ? request.query.page : 1;
+//       const limit = parseInt(request.query.limit) || 3;
 
-      if (typeof limit === "number") {
-        console.log("Pages", page);
-        // return;
+//       console.log(">>>>>", typeof limit);
 
-        // page no and limit and string pass kardi ya kuch bhi utla pulta pass kara diya pagination query string mein to kya?
+//       if (typeof limit === "number") {
+//         console.log("Pages", page);
+//         // return;
 
-        console.log("Page = ", page, "Limit = ", limit);
+//         // page no and limit and string pass kardi ya kuch bhi utla pulta pass kara diya pagination query string mein to kya?
 
-        const offset = (page - 1) * limit;
+//         console.log("Page = ", page, "Limit = ", limit);
 
-        const data = await User.find().skip(offset).limit(limit);
-        if (data.length > 0) {
-          return response.status(200).json({ data: data });
-        } else {
-          return response.status(200).json({ msg: "Record not found" });
-        }
-      }
-    } else {
-      return response.status(200).json({ msg: "Record not found" });
-    }
-  } catch (error) {
-    console.log("Record not found");
-  }
+//         const offset = (page - 1) * limit;
+
+//         const data = await User.find().skip(offset).limit(limit);
+//         if (data.length > 0) {
+//           return response.status(200).json({ data: data });
+//         } else {
+//           return response.status(200).json({ msg: "Record not found" });
+//         }
+//       }
+//     } else {
+//       return response.status(200).json({ msg: "Record not found" });
+//     }
+//   } catch (error) {
+//     console.log("Record not found");
+//   }
+// });
+
+app.get("/api/users", (request, response) => {
+  
 });
-
 app.listen(PORT, () => {
   console.log(`Server is running on port no. ${PORT}`);
 });

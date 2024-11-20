@@ -12,6 +12,7 @@ const userSchema = new schema({
   monthly_income: { type: Number },
   age: { type: Number },
   isActive: { type: Boolean, default: true },
+  verifiedStatus: { type: String, default: "Pending" }, // Pending Cancelled Completed
   isDeleted: { type: Boolean, default: false },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
